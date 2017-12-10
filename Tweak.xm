@@ -20,9 +20,15 @@
 %end
 
 %hook SBRootFolderView
-
-- (void)_awayControllerUnlocked:(id)unlocked {
-%orig;
+-(void)//something
+[[NSNotificationCenter defaultCenter] addObserver:(id)observer
+           selector:(SEL)doTheThing
+               name:(NSNotificationName)DelayedFadeWeUnlocked
+               object:nil];
+}
+%new
+-(void)doTheThing(NSNotification *)notification
+{
 for (UIView *view in self.subviews) {
     view.alpha = 0.0;
 }
@@ -32,5 +38,5 @@ for (UIView *view in self.subviews) {
     }
 } completion:NULL];
 }
-*/
+
 %end
