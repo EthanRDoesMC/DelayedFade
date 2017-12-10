@@ -12,8 +12,21 @@
 // EndGoal: Icons don't do the fly-in thing on unlock but rather fade in after a set amount of time
 //There is no need to remind me how awful this code is - I'm well aware :P
 
+
+
+
 //thanks AppleBetas
 
+[[NSNotificationCenter defaultCenter] postNotificationName:@"Downloadfinished"
+                                                    object:self];
+                                                    
+                                                
+
+
+
+
+
+/*
 - (void)_awayControllerUnlocked:(id)unlocked {
 %orig;
 for (UIView *view in self.subviews) {
@@ -25,4 +38,5 @@ for (UIView *view in self.subviews) {
     }
 } completion:NULL];
 }
+*/
 %end
