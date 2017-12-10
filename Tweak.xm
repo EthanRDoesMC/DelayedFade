@@ -1,28 +1,4 @@
-//github please stop with the weird editor
-//todo - add fade duration customizer
-
-CGFloat prefDelay = 5.0;
-static BOOL fade = TRUE;
-
-static void fadeIn(CGFloat timeToWait)
-{
-	if ([fade boolValue] == TRUE) {
-		[UIView animateWithDuration:0.333 delay:timeToWait options:UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState animations:^{
-			baseOffset = 0.0;
-				view.alpha = 1.0;
-		}
-	}
-}
-
-static void clearIcons()
-{
-	if ([fade boolValue] == TRUE) {
-		[UIView animateWithDuration:0.0 delay:0.0 options:UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState animations:^{
-			baseOffset = 0.0;
-				view.alpha = 0.0;
-		}
-	}
-}
+#import <UIKit/UIKit.h>
 
 @interface SBIconController
 - (void)_awayControllerUnlocked:(id)unlocked;
@@ -30,12 +6,24 @@ static void clearIcons()
 
 %hook SBIconController
 
+//alright, so here's my problem. #1: i cannot find _awayControllerUnlocked in FLEXible. 
+// #2: I need to somehow use the view of SBIconController (SBIconContentView) but how
+// #3? : The two animations may be in the way of each other
+// EndGoal: Icons don't do the fly-in thing on unlock but rather fade in after a set amount of time
+//There is no need to remind me how awful this code is - I'm well aware :P
+
 - (void)_awayControllerUnlocked:(id)unlocked {
-clearIcons();
-fadeIn(prefDelay);
-	%orig;
+%orig;
+[UIView animateWithDuration:0.0 delay:0.0 options:UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState animations:^{
+			for (UIView *view in self.subviews) {
+				view.alpha = 0.0;
+			}
+		} completion:NULL];
+
+[UIView animateWithDuration:0.333 delay:5.0 options:UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState animations:^{
+			for (UIView *view in self.subviews) {
+view.alpha =1.0;
+		}
+		} completion:NULL];
 }
-
 %end
-
-//todo: preferences
