@@ -1,10 +1,7 @@
 #import <UIKit/UIKit.h>
 
-@interface SBIconController
-- (void)_awayControllerUnlocked:(id)unlocked;
-@end
 
-%hook SBIconController
+//%hook SBIconController
 
 //alright, so here's my problem. #1: i cannot find _awayControllerUnlocked in FLEXible. 
 // #2: I need to somehow use the view of SBIconController (SBIconContentView) but how
@@ -16,15 +13,17 @@
 
 
 //thanks AppleBetas
-
-[[NSNotificationCenter defaultCenter] postNotificationName:@"Downloadfinished"
-                                                    object:self];
-                                                    
+%hook SBLockScreenViewController
+-(void)finishUIUnlockFromSource:(int)arg1 {
+%orig;
+[[NSNotificationCenter defaultCenter] postNotificationName:@"DelayedFadeWeUnlocked"
+                                                    object:nil];
+                                                    }
                                                 
 
+%end
 
-
-
+%hook SBRootFolderView
 
 /*
 - (void)_awayControllerUnlocked:(id)unlocked {
