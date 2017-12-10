@@ -23,7 +23,7 @@
 -(void)//something
 [[NSNotificationCenter defaultCenter] addObserver:(id)observer
            selector:(SEL)doTheThing
-               name:(NSNotificationName)DelayedFadeWeUnlocked
+               name:(NSNotificationName)@"DelayedFadeWeUnlocked"
                object:nil];
 }
 %new
