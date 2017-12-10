@@ -18,13 +18,18 @@
                                                     object:nil];
 }
 %end
+//Depending on which one works the other will remain uncommented
+//test on ios 9, you fool
 
-%hook SBRootFolderView
--(void)//something
+//%hook SBRootFolderView
+//-(id)initWithFrame:(CGRect)frame {
+%hook SBRootFolderController
+-(void)viewDidLoad {
 [[NSNotificationCenter defaultCenter] addObserver:(id)observer
            selector:(SEL)doTheThing
                name:(NSNotificationName)@"DelayedFadeWeUnlocked"
                object:nil];
+              %orig;
 }
 %new
 -(void)doTheThing(NSNotification *)notification
